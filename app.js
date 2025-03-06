@@ -1,7 +1,7 @@
-for (let i= 1;i<=9;i++){
-    for(let cell=1;cell<=9;cell++){
-        document.getElementById("row-"+i).insertAdjacentHTML("beforeend",
-        
+for (let i = 1; i <= 9; i++) {
+    for (let cell = 1; cell <= 9; cell++) {
+        document.getElementById("row-" + i).insertAdjacentHTML("beforeend",
+
             `<div id="${i}-${cell}" class="col-1 cell cell${cell}">${cell}</div>`
         )
     }
@@ -46,9 +46,25 @@ if (theme == "light") {
 }
 
 
-function menuOpen(){
-    document.getElementById("bb").classList.add("blurBG")
+function menuOpen() {
+    document.getElementById("menu").classList.add("menuInAnim")
     document.getElementById("menu").classList.remove("d-none")
+    document.getElementById("bb").classList.add("blurBG")
+
+
+    setTimeout(() => {
+        document.getElementById("menu").classList.remove("menuInAnim")
+
+    }, 500);
 }
 
+function menuClose() {
+    document.getElementById("menu").classList.add("menuOutAnim")
 
+    setTimeout(() => {
+        document.getElementById("menu").classList.remove("menuOutAnim")
+        document.getElementById("menu").classList.add("d-none")
+        document.getElementById("bb").classList.remove("blurBG")
+
+    }, 500);
+}

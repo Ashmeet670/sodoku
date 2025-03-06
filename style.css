@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
 
 :root {
-    --primary: rgb(25,25,25);
-    --secondary: rgb(41,41,41);
+    --primary: rgb(25, 25, 25);
+    --secondary: rgb(41, 41, 41);
     --shadow: rgb(25, 25, 25);
     --cellBorder: rgb(55, 55, 55);
     --outlineBorder: rgb(100, 100, 100);
@@ -80,7 +80,6 @@ nav>div {
     background-color: var(--secondary);
     z-index: 1;
     font-size: clamp(21px, 2.4vw, 27px);
-    animation: menuIn 0.5s 0s linear forwards;
     box-shadow: 3px 0px 5px var(--shadow);
     color: var(--primaryText);
 }
@@ -89,6 +88,10 @@ nav>div {
 
 .menuItem {
     font-size: clamp(18px, 1.75vw, 23px);
+}
+
+.menuInAnim {
+    animation: menuIn 0.5s 0s linear forwards;
 }
 
 @keyframes menuIn {
