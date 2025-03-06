@@ -40,9 +40,21 @@ nav>div {
     aspect-ratio: 1/1;
     width: clamp(30px,9.2vw,70px);
     font-size: clamp(15px, 2vw, 22px);
-
-
 }
+
+.cellC {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary);
+    border: 3px solid var(--cellBorder);
+    text-align: center;
+    aspect-ratio: 1/1;
+    width: clamp(30px,9.2vw,70px);
+    font-size: clamp(15px, 2vw, 22px);
+}
+
+
 
 .cell1 {
     border-left: 2px solid var(--outlineBorder);
