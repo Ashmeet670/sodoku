@@ -38,8 +38,8 @@ nav>div {
     border: 1px solid var(--cellBorder);
     text-align: center;
     aspect-ratio: 1/1;
-    width: 65px;
-    font-size: clamp(15px, 2vw, 20px);
+    width: clamp(30px,9.2vw,70px);
+    font-size: clamp(15px, 2vw, 22px);
 
 
 }
