@@ -22,19 +22,18 @@ const dark = {
     "--secondary": "rgb(41,41,41)",
     "--shadow": "rgb(25, 25, 25)",
     "--cellBorder": "rgb(65, 65, 65)",
-    "--outlineBorder": "rgb(100, 100, 100)",
+    "--outlineBorder": "rgb(110, 110, 110)",
     "--text": "rgb(230, 230, 230)",
 }
 
-// theme = localStorage.getItem("themes")
+theme = localStorage.getItem("themes")
 
-theme = "dark";
 if (theme == null) {
     localStorage.setItem("themes", "light")
 }
 if (theme == "dark") {
-    // document.getElementById("dark").classList.remove("d-none")
-    // document.getElementById("light").classList.add("d-none")
+    document.getElementById("dark").classList.remove("d-none")
+    document.getElementById("light").classList.add("d-none")
     for (i in dark) {
         document.documentElement.style.setProperty(i, dark[i]);
     }
@@ -46,16 +45,15 @@ if (theme == "light") {
 }
 
 
-function menuOpen() {
+function menuOpen(btn) {
+
     document.getElementById("menu").classList.add("menuInAnim")
     document.getElementById("menu").classList.remove("d-none")
     document.getElementById("bb").classList.add("blurBG")
 
 
-    setTimeout(() => {
-        document.getElementById("menu").classList.remove("menuInAnim")
 
-    }, 500);
+
 }
 
 function menuClose() {
@@ -65,6 +63,16 @@ function menuClose() {
         document.getElementById("menu").classList.remove("menuOutAnim")
         document.getElementById("menu").classList.add("d-none")
         document.getElementById("bb").classList.remove("blurBG")
-
     }, 500);
+}
+
+function themeChange(theme, themeStr, btn) {
+
+    for (i in theme) {
+        document.documentElement.style.setProperty(i, theme[i]);
+    }
+    localStorage.setItem("themes", themeStr)
+
+    btn.classList.add("d-none")
+    document.getElementById(themeStr).classList.remove("d-none")
 }

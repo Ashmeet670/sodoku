@@ -39,7 +39,7 @@ nav>div {
     text-align: center;
     aspect-ratio: 1/1;
     width: 65px;
-    font-size: clamp(15px, 1vw, 20px);
+    font-size: clamp(15px, 2vw, 20px);
 
 
 }
