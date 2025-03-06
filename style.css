@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
+
+:root {
+    --primary: rgb(25,25,25);
+    --secondary: rgb(41,41,41);
+    --shadow: rgb(25, 25, 25);
+    --cellBorder: rgb(55, 55, 55);
+    --outlineBorder: rgb(100, 100, 100);
+    --text: rgb(230, 230, 230);
+}
+
+body {
+    background-color: var(--primary);
+    font-family: "Funnel Display", sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    color: var(--text);
+}
+
+nav>div {
+    font-size: clamp(25px, 4vw, 35px);
+}
+
+.titleBar {
+    background-color: var(--secondary);
+    box-shadow: 2px 2px 6px var(--shadow);
+}
+
+.row {
+    width: fit-content;
+}
+
+.cell {
+    background-color: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--cellBorder);
+    text-align: center;
+    aspect-ratio: 1/1;
+    width: 65px;
+    font-size: clamp(15px, 1vw, 20px);
+
+
+}
+
+.cell1 {
+    border-left: 2px solid var(--outlineBorder);
+}
+
+.cell9,
+.cell3,
+.cell6 {
+    border-right: 2px solid var(--outlineBorder);
+}
+
+#row-1 {
+    border-top: 2px solid var(--outlineBorder);
+}
+
+#row-3,
+#row-6,
+#row-9 {
+    border-bottom: 2px solid var(--outlineBorder);
+}
+
+.blurBG {
+    filter: blur(2px);
+
+}
+
+
+#menu {
+    min-width: 50vw;
+    width: fit-content;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background-color: var(--secondary);
+    z-index: 1;
+    font-size: clamp(21px, 2.4vw, 27px);
+    animation: menuIn 0.5s 0s linear forwards;
+    box-shadow: 3px 0px 5px var(--shadow);
+    color: var(--primaryText);
+}
+
+
+
+.menuItem {
+    font-size: clamp(18px, 1.75vw, 23px);
+}
+
+@keyframes menuIn {
+
+    0% {
+        transform: translateX(-500px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.menuOutAnim {
+    animation: menuOut 0.5s 0s linear forwards;
+}
+
+@keyframes menuOut {
+
+    100% {
+        transform: translateX(-500px);
+
+    }
+}
+
+
+.cursorClick {
+    cursor: pointer;
+}
+
+
+
+
+
+@media only screen and (min-width:576px) {
+    #menu {
+        min-width: 40vw;
+    }
+}
+
+/* md */
+@media only screen and (min-width:768px) {
+    #menu {
+        min-width: 35vw;
+    }
+}
+
+/* lg */
+@media only screen and (min-width:992px) {
+    #menu {
+        min-width: 30vw;
+    }
+}
+
+/* xl */
+@media only screen and (min-width:1200px) {
+    #menu {
+        min-width: 25vw;
+    }
+}
+
+/* xxl */
+@media only screen and (min-width:1400px) {
+    #menu {
+        min-width: 20vw;
+    }
+}
