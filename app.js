@@ -18,7 +18,7 @@ for (let i = 1; i <= 9; i++) {
         index = (((i - 1) * 9) + cell) - 1
         document.getElementById("row-" + i).insertAdjacentHTML("beforeend",
 
-            sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} fillCell" onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell}" >${sudokuBoard[index]}</div>`
+            sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} fillCell" onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell} fixedCell" >${sudokuBoard[index]}</div>`
 
         )
     }
@@ -36,6 +36,8 @@ const light = {
     "--text": "black",
     "--selectBG": "rgb(250, 250, 250)",
     "--fillHover": "rgb(247, 247, 247)",
+    "--fixedCellText": "rgb(155,155,155)",
+
 
 }
 
@@ -48,6 +50,8 @@ const dark = {
     "--text": "rgb(230, 230, 230)",
     "--selectBG": "rgb(65, 65, 65)",
     "--fillHover": "rgb(51, 51, 51)",
+    "--fixedCellText": "rgb(155,155,155)",
+
 
 }
 
@@ -129,8 +133,6 @@ addEventListener("keydown", (event) => {
         menuOpen()
     }
 
-
-
 });
 
 
@@ -141,4 +143,10 @@ function addNumber(num){
     index = ((selectedID[0]-1)*9) + selectedID[2]
     sudokuBoard[index] = num
     document.getElementById(selectedID).innerHTML = num
+}
+
+function eraseNumber(){
+    index = ((selectedID[0]-1)*9) + selectedID[2]
+    sudokuBoard[index] = ""
+    document.getElementById(selectedID).innerHTML = ""
 }
