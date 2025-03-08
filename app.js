@@ -136,3 +136,9 @@ addEventListener("keydown", (event) => {
 
 
 // new commit test
+
+function addNumber(num){
+    index = ((selectedID[0]-1)*9) + selectedID[2]
+    sudokuBoard[index] = num
+    document.getElementById(selectedID).innerHTML = num
+}

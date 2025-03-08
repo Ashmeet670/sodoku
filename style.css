@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
+
 
 :root {
     --primary: rgb(25, 25, 25);
@@ -46,7 +47,9 @@ body {
     aspect-ratio: 1/1;
     width: clamp(30px, 10vh, 10vw);
     font-size: clamp(15px, 2vw, 22px);
+    font-family: "Kdam Thmor Pro", sans-serif;
 }
+
 
 .cellC {
     display: inline-flex;
