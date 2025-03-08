@@ -71,21 +71,17 @@
 
 
         <div id="bb" class="">
-            <nav class="titleBar d-flex p-2 px-4 justify-content-center ">
 
-                <div class="mx-auto">Sodoku</div>
-                <div id="menuOC" class="d-flex align-items-center cursorClick" onclick="menuOpen(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="0.8em" fill="currentColor" class="bi bi-sliders2"
-                        viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
-                    </svg>
-                </div>
+            <div id="menuOC" class="d-flex align-items-center cursorClick p-2" onclick="menuOpen(this)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="0.8em" fill="currentColor" class="bi bi-sliders2"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                </svg>
+            </div>
 
-            </nav>
-
-            <div class="d-lg-flex justify-content-center">
-                <div class="board  p-0 mt-5 mb-4 col-lg-8">
+            <div class=" justify-content-center mt-4">
+                <div class="board  p-0  mb-4 ">
 
                     <div id="row-1" class="row justify-content-center mx-auto"></div>
                     <div id="row-2" class="row justify-content-center mx-auto"></div>
@@ -99,32 +95,26 @@
 
                 </div>
 
-                <div class="text-center mt-4 col-lg-3">
+                <div class="text-center mt-4 ">
                     <div class="cellC p-1 m-1">1</div>
                     <div class="cellC p-1 m-1">2</div>
-                    <br class="d-none d-lg-block d-xl-none">
 
                     <div class="cellC p-1 m-1">3</div>
-                    <br class="d-none d-xl-block">
                     <div class="cellC p-1 m-1">4</div>
-                    <br class="d-none d-lg-block d-xl-none">
 
                     <div class="cellC p-1 m-1">5</div>
                     <br class="d-md-none">
 
                     <div class="cellC p-1 m-1">6</div>
-                    <br class="d-none d-lg-block d-xl-none">
 
-                    <br class="d-none d-xl-block">
                     <div class="cellC p-1 m-1">7</div>
                     <div class="cellC p-1 m-1">8</div>
-                    <br class="d-none d-lg-block d-xl-none">
 
                     <div class="cellC p-1 m-1">9</div>
-                    <br class="d-none d-xl-block">
 
                     <div class="cellC p-1 m-1">X</div>
-                    <br>
+                    <br class="d-md-none">
+
                 </div>
             </div>
 
