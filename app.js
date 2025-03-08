@@ -14,7 +14,9 @@ const light = {
     "--shadow": "rgb(205, 205, 205)",
     "--cellBorder": "rgb(240, 240, 240)",
     "--outlineBorder": "black",
-    "--text": "black"
+    "--text": "black",
+    "--selectBG": "rgb(250, 250, 250)",
+
 }
 
 const dark = {
@@ -24,9 +26,11 @@ const dark = {
     "--cellBorder": "rgb(65, 65, 65)",
     "--outlineBorder": "rgb(110, 110, 110)",
     "--text": "rgb(230, 230, 230)",
+    "--selectBG": "rgb(65, 65, 65)",
+
 }
 
-theme = localStorage.getItem("themes")
+var theme = localStorage.getItem("themes")
 
 if (theme == null) {
     localStorage.setItem("themes", "light")
@@ -45,19 +49,32 @@ if (theme == "light") {
 }
 
 
+
+var menuOpened = false
+
 function menuOpen(btn) {
 
     document.getElementById("menu").classList.add("menuInAnim")
     document.getElementById("menu").classList.remove("d-none")
     document.getElementById("bb").classList.add("blurBG")
-
-
+    menuOpened = true
 
 
 }
 
+addEventListener("keydown", (event) => {
+    if (event.key == "Escape" && menuOpened == true){
+        menuClose()
+    }
+    if ((event.key == "m" || event.key == "M") && menuOpened == false){
+        menuOpen()
+    }
+});
+
 function menuClose() {
     document.getElementById("menu").classList.add("menuOutAnim")
+    menuOpened = false
+
 
     setTimeout(() => {
         document.getElementById("menu").classList.remove("menuOutAnim")
