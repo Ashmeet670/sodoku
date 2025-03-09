@@ -132,21 +132,101 @@ addEventListener("keydown", (event) => {
     if ((event.key == "m" || event.key == "M") && menuOpened == false) {
         menuOpen()
     }
+    if (!isNaN(event.key)) {  //gives true if a number
+        addNumber(event.key)
+    }
+
+    if (event.key == "ArrowDown") {
+
+        idN = `${Number(selectedID[0]) + 1}-${selectedID[2]}`
+
+        if (idN[1] == "0") {  //if last row then idN = 10-x then idN[1] = 0 wrna idN[1] normally = "-"
+            idN = `1-${selectedID[2]}`
+        }
+
+        while (document.getElementById(`${Number(idN[0])}-${idN[2]}`).classList.contains("fixedCell")) {
+            idN = `${Number(idN[0]) + 1}-${idN[2]}`
+            if (idN[1] == "0") {  //if last row then idN = 10-x then idN[1] = 0 wrna idN[1] normally = "-"
+                idN = `1-${selectedID[2]}`
+            }
+        }
+        boxSelected(document.getElementById(idN))
+    }
+
+
+
+
+    if (event.key == "ArrowUp") {
+        idN = `${Number(selectedID[0]) - 1}-${selectedID[2]}`
+
+
+        if (idN[0] == "0") { //if first row se go up then new row = 0, toh reset to row = 9 and then since cell will be <9 at top row, add 9 to get back to cell for 
+            idN = `9-${selectedID[2]}`
+        }
+
+        while (document.getElementById(`${Number(idN[0])}-${idN[2]}`).classList.contains("fixedCell")) {
+            idN = `${Number(idN[0]) - 1}-${idN[2]}`
+            if (idN[0] == "0") { //if first row se go up then new row = 0, toh reset to row = 9 and then since cell will be <9 at top row, add 9 to get back to cell for 
+                idN = `9-${selectedID[2]}`
+            }
+        }
+
+        boxSelected(document.getElementById(idN))
+    }
+
+    if (event.key == "ArrowLeft") {
+
+
+        idN = `${selectedID[0]}-${Number(selectedID[2]) - 1}` //same row, cell 1 towards left
+
+        if (idN[2] == "0") { //if first column (cell=1) se go left then new cell = 0, toh set to col = 9
+            idN = `${idN[0]}-${9}`
+        }
+
+        while (document.getElementById(`${Number(idN[0])}-${idN[2]}`).classList.contains("fixedCell")) {
+            idN = `${idN[0]}-${Number(idN[2]) - 1}`
+            if (idN[2] == "0") { //if first column (cell=1) se go left then new cell = 0, toh set to col = 9
+                idN = `${idN[0]}-${9}`
+            }
+        }
+
+        boxSelected(document.getElementById(idN))
+    }
+
+    if (event.key == "ArrowRight") {
+
+
+        idN = `${selectedID[0]}-${Number(selectedID[2]) + 1}` //same row, cell 1 towards right
+
+        if (idN[3] == "0") { //if last column (cell=9) se go right then new cell = 10, toh set to col = 1
+            idN = `${idN[0]}-${1}`
+        }
+
+        while (document.getElementById(`${Number(idN[0])}-${idN[2]}`).classList.contains("fixedCell")) {
+            idN = `${idN[0]}-${Number(idN[2]) + 1}`
+            if (idN[3] == "0") { //if last column (cell=9) se go right then new cell = 10, toh set to col = 1
+                idN = `${idN[0]}-${1}`
+            }
+        }
+
+        boxSelected(document.getElementById(idN))
+    }
+
+
 
 });
 
 
-
 // new commit test
 
-function addNumber(num){
-    index = ((selectedID[0]-1)*9) + selectedID[2]
-    sudokuBoard[index] = num
+function addNumber(num) {
+    index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
+    sudokuBoard[index - 1] = num
     document.getElementById(selectedID).innerHTML = num
 }
 
-function eraseNumber(){
-    index = ((selectedID[0]-1)*9) + selectedID[2]
-    sudokuBoard[index] = ""
+function eraseNumber() {
+    index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
+    sudokuBoard[index - 1] = ""
     document.getElementById(selectedID).innerHTML = ""
 }
