@@ -136,6 +136,10 @@ addEventListener("keydown", (event) => {
         addNumber(event.key)
     }
 
+    if (event.key == "Backspace") {  //gives true if a number
+        eraseNumber()
+    }
+
     if (event.key == "ArrowDown") {
 
         idN = `${Number(selectedID[0]) + 1}-${selectedID[2]}`
@@ -152,9 +156,6 @@ addEventListener("keydown", (event) => {
         }
         boxSelected(document.getElementById(idN))
     }
-
-
-
 
     if (event.key == "ArrowUp") {
         idN = `${Number(selectedID[0]) - 1}-${selectedID[2]}`
@@ -211,8 +212,6 @@ addEventListener("keydown", (event) => {
 
         boxSelected(document.getElementById(idN))
     }
-
-
 
 });
 
