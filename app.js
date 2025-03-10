@@ -12,14 +12,16 @@ sudokuBoard = [
     "", "", "", "", 8, "", "", 7, 9
 ];
 
+empty = 0
+
 
 for (let i = 1; i <= 9; i++) {
     for (let cell = 1; cell <= 9; cell++) {
         index = (((i - 1) * 9) + cell) - 1
         document.getElementById("row-" + i).insertAdjacentHTML("beforeend",
 
-            sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} fillCell" onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell} fixedCell" >${sudokuBoard[index]}</div>`
-
+            sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} fillCell" onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell} fixedCell" >${sudokuBoard[index]}</div>`,
+            sudokuBoard[index] == "" ? empty += 1 : empty += 0
         )
     }
 
@@ -222,10 +224,35 @@ function addNumber(num) {
     index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
     sudokuBoard[index - 1] = num
     document.getElementById(selectedID).innerHTML = num
+    empty -= 1
 }
 
 function eraseNumber() {
     index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
     sudokuBoard[index - 1] = ""
     document.getElementById(selectedID).innerHTML = ""
+    empty += 1
+}
+
+
+passed = ""
+
+function checkBoard() {
+    for (let i = 1; i <= 9; i++) {
+        usedNums = []
+        for (let cell = 1; cell <= 9; cell++) {
+
+            num = Number(document.getElementById(`${i}-${cell}`).innerHTML)
+
+            if (!(usedNums.indexOf(num) == -1)) {
+                console.log("repeat")
+                passed = false
+            }
+
+
+            usedNums.push(num)
+
+        }
+        console.log(usedNums)
+    }
 }
