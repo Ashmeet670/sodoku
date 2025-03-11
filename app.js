@@ -20,7 +20,7 @@ for (let i = 1; i <= 9; i++) {
         index = (((i - 1) * 9) + cell) - 1
         document.getElementById("row-" + i).insertAdjacentHTML("beforeend",
 
-            sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} fillCell" onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell} fixedCell" >${sudokuBoard[index]}</div>`,
+            sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} fillCell " onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell} fixedCell" >${sudokuBoard[index]}</div>`,
             sudokuBoard[index] == "" ? empty += 1 : empty += 0
         )
     }
@@ -223,22 +223,37 @@ addEventListener("keydown", (event) => {
 function addNumber(num) {
     index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
     sudokuBoard[index - 1] = num
+
+    if (document.getElementById(selectedID).innerHTML == "") {
+        empty -= 1
+    }
+    if (empty == 0) {
+        checkBoard()
+    }
+
     document.getElementById(selectedID).innerHTML = num
-    empty -= 1
+
+
 }
 
 function eraseNumber() {
     index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
     sudokuBoard[index - 1] = ""
+    if (!(document.getElementById(selectedID).innerHTML == "")) {
+        empty += 1
+    }
+    if (empty == 0) {
+        checkBoard()
+    }
     document.getElementById(selectedID).innerHTML = ""
-    empty += 1
 }
 
 
-passed = ""
+
 
 function checkBoard() {
-
+    passed = ""
+    console.log("checkcccc")
     //rows
     for (let i = 1; i <= 9; i++) {
         usedNums = []
@@ -263,14 +278,15 @@ function checkBoard() {
 
             num = Number(document.getElementById(`${row}-${i}`).innerHTML)
 
+
             if (!(usedNums.indexOf(num) == -1)) {
                 passed = false
             }
 
-
-            usedNums.push(num)
-
         }
+
+        usedNums.push(num)
+
     }
 
     box1 = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3", "3-1", "3-2", "3-3"]
@@ -296,6 +312,7 @@ function checkBoard() {
 
             if (!(usedNums.indexOf(num) == -1)) {
                 passed = false
+
             }
 
             usedNums.push(num)
@@ -303,4 +320,8 @@ function checkBoard() {
         }
 
     }
+
+
 }
+
+

@@ -13,6 +13,7 @@
     --selectBG: rgb(250, 250, 250);
     --fillHover: rgb(236, 236, 236);
     --fixedCellText: rgb(155,155,155);
+    --cellWrong: rgb(255, 75, 75);
 }
 
 body {
@@ -46,7 +47,7 @@ body {
     border: 1px solid var(--cellBorder);
     text-align: center;
     aspect-ratio: 1/1;
-    width: clamp(30px, 10vh, 10vw);
+    width: clamp(30px, 11vh, 11vw);
     font-size: clamp(15px, 2vw, 22px);
     font-family: "Kdam Thmor Pro", sans-serif;
 }
@@ -160,6 +161,9 @@ body {
     color: var(--fixedCellText);
 }
 
+.cellWrong{
+    color: var(--cellWrong);
+}
 
 
 
