@@ -1,3 +1,16 @@
+// sudokuBoard = [
+//     5, 3, "", "", 7, "", "", "", "",
+//     6, "", "", 1, 9, 5, "", "", "",
+//     "", 9, 8, "", "", "", "", 6, "",
+
+//     8, "", "", "", 6, "", "", "", 3,
+//     4, "", "", 8, "", 3, "", "", 1,
+//     7, "", "", "", 2, "", "", "", 6,
+
+//     "", 6, "", "", "", "", 2, 8, "",
+//     "", "", "", 4, 1, 9, "", "", 5,
+//     "", "", "", "", 8, "", "", 7, 9
+// ];
 sudokuBoard = [
     5, 3, "", "", 7, "", "", "", "",
     6, "", "", 1, 9, 5, "", "", "",
@@ -10,6 +23,21 @@ sudokuBoard = [
     "", 6, "", "", "", "", 2, 8, "",
     "", "", "", 4, 1, 9, "", "", 5,
     "", "", "", "", 8, "", "", 7, 9
+];
+
+
+sudokuBoardCorrect = [
+    5, 3, 4, 6, 7, 8, 9, 1, 2,
+    6, 7, 2, 1, 9, 5, 3, 4, 8,
+    1, 9, 8, 3, 4, 2, 5, 6, 7,
+
+    8, 5, 9, 7, 6, 1, 4, 2, 3,
+    4, 2, 6, 8, 5, 3, 7, 9, 1,
+    7, 1, 3, 9, 2, 4, 8, 5, 6,
+
+    9, 6, 1, 5, 3, 7, 2, 8, 4,
+    2, 8, 7, 4, 1, 9, 6, 3, 5,
+    3, 4, 5, 2, 8, 6, 1, 7, 9
 ];
 
 empty = 0
@@ -61,6 +89,9 @@ var theme = localStorage.getItem("themes")
 
 if (theme == null) {
     localStorage.setItem("themes", "light")
+    for (i in light) {
+        document.documentElement.style.setProperty(i, light[i]);
+    }
 }
 if (theme == "dark") {
     document.getElementById("dark").classList.remove("d-none")
@@ -227,9 +258,9 @@ function addNumber(num) {
     if (document.getElementById(selectedID).innerHTML == "") {
         empty -= 1
     }
-    if (empty == 0) {
-        checkBoard()
-    }
+    // if (empty == 0) {
+    //     checkBoard()
+    // }
 
     document.getElementById(selectedID).innerHTML = num
 
@@ -250,78 +281,179 @@ function eraseNumber() {
 
 
 
+score = 0
+correct = 3
+wrong = 1
 
-function checkBoard() {
-    passed = ""
-    console.log("checkcccc")
-    //rows
-    for (let i = 1; i <= 9; i++) {
-        usedNums = []
-        for (let cell = 1; cell <= 9; cell++) {
+function columnCheck(num){
 
-            num = Number(document.getElementById(`${i}-${cell}`).innerHTML)
+    duplicate = 0
 
-            if (!(usedNums.indexOf(num) == -1)) {
-                passed = false
-            }
+    cells = document.getElementsByClassName(`cell${selectedID[2]}`)
 
-
-            usedNums.push(num)
-
+    //iterate each col to see if koi same numbers hai
+    for(j=0;j<=8;j++){
+        if(Number(cells[j].innerHTML) == num){
+            duplicate+=1
         }
     }
 
-    //column 
-    for (let i = 1; i <= 9; i++) {
-        usedNums = []
-        for (let row = 1; row <= 9; row++) {
 
-            num = Number(document.getElementById(`${row}-${i}`).innerHTML)
-
-
-            if (!(usedNums.indexOf(num) == -1)) {
-                passed = false
-            }
-
+    //if same numbers hai toh make all red
+    if(duplicate>=2){
+        for(j=0;j<=8;j++){
+            cells[j].classList.add('cellWrong')
         }
-
-        usedNums.push(num)
-
     }
-
-    box1 = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3", "3-1", "3-2", "3-3"]
-    box2 = ["1-4", "1-5", "1-6", "2-4", "2-5", "2-6", "3-4", "3-5", "3-6"]
-    box3 = ["1-7", "1-8", "1-9", "2-7", "2-8", "2-9", "3-7", "3-8", "3-9"]
-
-    box4 = ["4-1", "4-2", "4-3", "5-1", "5-2", "5-3", "6-1", "6-2", "6-3"]
-    box5 = ["4-4", "4-5", "4-6", "5-4", "5-5", "5-6", "6-4", "6-5", "6-6"]
-    box6 = ["4-7", "4-8", "4-9", "5-7", "5-8", "5-9", "6-7", "6-8", "6-9"]
-
-    box7 = ["7-1", "7-2", "7-3", "8-1", "8-2", "8-3", "9-1", "9-2", "9-3"]
-    box8 = ["7-4", "7-5", "7-6", "8-4", "8-5", "8-6", "9-4", "9-5", "9-6"]
-    box9 = ["7-7", "7-8", "7-9", "8-7", "8-8", "8-9", "9-7", "9-8", "9-9"]
-
-    boxes = [box1, box2, box3, box4, box5, box6, box7, box8, box9]
-
-
-    for (i in boxes) {
-        usedNums = []
-        for (cell in boxes[i]) {
-
-            num = Number(document.getElementById(boxes[i][cell]).innerHTML)
-
-            if (!(usedNums.indexOf(num) == -1)) {
-                passed = false
-
-            }
-
-            usedNums.push(num)
-
-        }
-
-    }
-
-
+    
 }
 
+
+
+
+//row col box wala
+// function checkRowColBox() {
+
+//     box1 = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3", "3-1", "3-2", "3-3"]
+//     box2 = ["1-4", "1-5", "1-6", "2-4", "2-5", "2-6", "3-4", "3-5", "3-6"]
+//     box3 = ["1-7", "1-8", "1-9", "2-7", "2-8", "2-9", "3-7", "3-8", "3-9"]
+
+//     box4 = ["4-1", "4-2", "4-3", "5-1", "5-2", "5-3", "6-1", "6-2", "6-3"]
+//     box5 = ["4-4", "4-5", "4-6", "5-4", "5-5", "5-6", "6-4", "6-5", "6-6"]
+//     box6 = ["4-7", "4-8", "4-9", "5-7", "5-8", "5-9", "6-7", "6-8", "6-9"]
+
+//     box7 = ["7-1", "7-2", "7-3", "8-1", "8-2", "8-3", "9-1", "9-2", "9-3"]
+//     box8 = ["7-4", "7-5", "7-6", "8-4", "8-5", "8-6", "9-4", "9-5", "9-6"]
+//     box9 = ["7-7", "7-8", "7-9", "8-7", "8-8", "8-9", "9-7", "9-8", "9-9"]
+//     boxes = [box1, box2, box3, box4, box5, box6, box7, box8, box9]
+
+
+//     boxPresent = ""
+
+//     for (i in boxes) {
+//         for (cell in boxes[i]) {
+//             if (boxes[i][cell] == selectedID) {
+//                 boxPresent = boxes[i]
+//             }
+//         }
+//     }
+
+//     console.log(boxPresent)
+//     row = selectedID[0]
+//     col = selectedID[2]
+//     console.log(row, col)
+
+//     //box
+//     for (i in boxPresent) {
+//         if ((document.getElementById(boxPresent[i]).innerHTML == document.getElementById(selectedID).innerHTML) && (boxPresent[i] != selectedID)) {
+//             document.getElementById(boxPresent[i]).classList.add("cellWrong")
+//         }
+        
+
+//     }
+
+//     //row
+//     for (let i = 1; i < 10; i++) {
+
+//         if (!document.getElementById(row + "-" + i).classList.contains("fixedCell")) {
+//             console.log(i)
+
+//             if ((document.getElementById(row + "-" + i).innerHTML == document.getElementById(selectedID).innerHTML) && ((row + "-" + i) != selectedID)) {
+//                 document.getElementById(row + "-" + i).classList.add("cellWrong")
+//                 console.log("wrong")
+//             }
+//         }
+
+//     }
+
+//     //col
+//     for (let i = 1; i < 10; i++) {
+
+//         if (!document.getElementById(i + "-" + col).classList.contains("fixedCell")) {
+//             if ((document.getElementById(i + "-" + col).innerHTML == document.getElementById(selectedID).innerHTML) && ((i + "-" + col) != selectedID)) {
+//                 document.getElementById(i + "-" + col).classList.add("cellWrong")
+//             }
+//         }
+
+//     }
+
+// }
+
+//original wala
+
+// function checkBoard() {
+//     passed = ""
+//     console.log("checkcccc")
+
+
+//     //rows
+//     for (let i = 1; i <= 9; i++) {
+//         usedNums = []
+//         for (let cell = 1; cell <= 9; cell++) {
+
+//             num = Number(document.getElementById(`${i}-${cell}`).innerHTML)
+
+
+//             if (!(usedNums.indexOf(num) == -1)) {
+//                 passed = false
+//             }
+
+
+//             usedNums.push(num)
+
+//         }
+//     }
+
+//     //column 
+//     for (let i = 1; i <= 9; i++) {
+//         usedNums = []
+//         for (let row = 1; row <= 9; row++) {
+
+//             num = Number(document.getElementById(`${row}-${i}`).innerHTML)
+
+
+//             if (!(usedNums.indexOf(num) == -1)) {
+//                 passed = false
+//             }
+
+//         }
+
+//         usedNums.push(num)
+
+//     }
+
+//     box1 = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3", "3-1", "3-2", "3-3"]
+//     box2 = ["1-4", "1-5", "1-6", "2-4", "2-5", "2-6", "3-4", "3-5", "3-6"]
+//     box3 = ["1-7", "1-8", "1-9", "2-7", "2-8", "2-9", "3-7", "3-8", "3-9"]
+
+//     box4 = ["4-1", "4-2", "4-3", "5-1", "5-2", "5-3", "6-1", "6-2", "6-3"]
+//     box5 = ["4-4", "4-5", "4-6", "5-4", "5-5", "5-6", "6-4", "6-5", "6-6"]
+//     box6 = ["4-7", "4-8", "4-9", "5-7", "5-8", "5-9", "6-7", "6-8", "6-9"]
+
+//     box7 = ["7-1", "7-2", "7-3", "8-1", "8-2", "8-3", "9-1", "9-2", "9-3"]
+//     box8 = ["7-4", "7-5", "7-6", "8-4", "8-5", "8-6", "9-4", "9-5", "9-6"]
+//     box9 = ["7-7", "7-8", "7-9", "8-7", "8-8", "8-9", "9-7", "9-8", "9-9"]
+
+//     boxes = [box1, box2, box3, box4, box5, box6, box7, box8, box9]
+
+
+//     for (i in boxes) {
+//         usedNums = []
+//         for (cell in boxes[i]) {
+
+//             num = Number(document.getElementById(boxes[i][cell]).innerHTML)
+
+//             if (!(usedNums.indexOf(num) == -1)) {
+//                 passed = false
+
+//             }
+
+//             usedNums.push(num)
+
+//         }
+
+//     }
+
+
+// }
 

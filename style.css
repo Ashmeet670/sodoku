@@ -10,8 +10,8 @@
     --cellBorder: rgb(55, 55, 55);
     --outlineBorder: black;
     --text: rgb(230, 230, 230);
-    --selectBG: rgb(250, 250, 250);
-    --fillHover: rgb(236, 236, 236);
+    --selectBG: rgb(65, 65, 65);
+    --fillHover: rgb(51, 51, 51);
     --fixedCellText: rgb(155,155,155);
     --cellWrong: rgb(255, 75, 75);
 }
