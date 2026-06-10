@@ -12,8 +12,8 @@
     --text: rgb(230, 230, 230);
     --selectBG: rgb(65, 65, 65);
     --fillHover: rgb(51, 51, 51);
-    --fixedCellText: rgb(155,155,155);
-    --cellWrong: rgb(255, 75, 75);
+    --fixedCellText: rgb(155, 155, 155);
+    --cellWrong: rgba(255, 75, 75, 0.75);
 }
 
 body {
@@ -66,8 +66,6 @@ body {
     cursor: pointer;
 
 }
-
-
 
 .cell1 {
     border-left: 2px solid var(--outlineBorder);
@@ -148,21 +146,21 @@ body {
 }
 
 
-.fillCell{
+.fillCell {
     font-family: "Playpen Sans", cursive;
 
 }
 
-.fillCellSelected{
+.fillCellSelected {
     background-color: var(--fillHover);
 }
 
-.fixedCell{
+.fixedCell {
     color: var(--fixedCellText);
 }
 
-.cellWrong{
-    color: var(--cellWrong);
+.cellWrong {
+    background-image: repeating-linear-gradient(315deg, var(--cellWrong) 0 2%, var(--primary) 3% 10%);
 }
 
 
@@ -180,11 +178,13 @@ body {
         width: clamp(30px, 9vh, 9vw);
 
     }
+
     .cellC {
         width: clamp(30px, 9.5vh, 9.5vw);
 
     }
-    .fillCell:hover{
+
+    .fillCell:hover {
         cursor: pointer;
         background-color: var(--fillHover);
     }
@@ -200,6 +200,7 @@ body {
         width: clamp(30px, 8.5vh, 8.5vw);
 
     }
+
     .cellC {
         width: clamp(30px, 9vh, 9vw);
 
@@ -211,9 +212,11 @@ body {
     #menu {
         min-width: 30vw;
     }
+
     .cell {
         width: clamp(30px, 8vh, 8vw);
     }
+
     .cellC {
         width: clamp(30px, 8.5vh, 8.5vw);
 
@@ -225,10 +228,12 @@ body {
     #menu {
         min-width: 25vw;
     }
+
     .cell {
         width: clamp(30px, 7.5vh, 7.5vw);
 
     }
+
     .cellC {
         width: clamp(30px, 8vh, 8vw);
 

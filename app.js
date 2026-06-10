@@ -291,19 +291,29 @@ function columnCheck(num){
 
     cells = document.getElementsByClassName(`cell${selectedID[2]}`)
 
+    wrong = []
+
     //iterate each col to see if koi same numbers hai
     for(j=0;j<=8;j++){
         if(Number(cells[j].innerHTML) == num){
             duplicate+=1
+            wrong.push(cells[j])
         }
     }
-
-
     //if same numbers hai toh make all red
     if(duplicate>=2){
-        for(j=0;j<=8;j++){
-            cells[j].classList.add('cellWrong')
+
+
+        //add to sirif wrong wale cells
+        for(i=0;i<=wrong.length;i++){
+            wrong[i].classList.add('cellWrong')
         }
+
+        //add to all cells in column
+        // for(j=0;j<=8;j++){
+
+        //     cells[j].classList.add('cellWrong')
+        // }
     }
     
 }
