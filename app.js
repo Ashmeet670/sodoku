@@ -265,13 +265,16 @@ function addNumber(num) {
 
     clearWrong(document.getElementsByClassName(`cell${selectedID[2]}`)) //column clear
     clearWrong(document.getElementsByClassName(`row${selectedID[0]}`)) //row clear
+    clearWrongBox()
 
+    
     document.getElementById(selectedID).innerHTML = num
     
     for(n=1;n<10;n++){ //choose number 1-9
         for(colRow=1;colRow<10;colRow++){ //checking column/row number
-        checkWrong(n,document.getElementsByClassName(`cell${colRow}`)) //columnChecking for number
-        checkWrong(n,document.getElementsByClassName(`row${colRow}`)) //rowChecking for number
+            checkWrong(n,document.getElementsByClassName(`cell${colRow}`)) //columnChecking for number
+            checkWrong(n,document.getElementsByClassName(`row${colRow}`)) //rowChecking for number
+            checkWrongBox(n)// box checking
         }   
     }
 
@@ -284,17 +287,29 @@ function eraseNumber() {
     if (!(document.getElementById(selectedID).innerHTML == "")) {
         empty += 1
     }
-    if (empty == 0) {
-        checkBoard()
-    }
+    // if (empty == 0) {
+    //     checkBoard()
+    // }
+
+    clearWrong(document.getElementsByClassName(`cell${selectedID[2]}`)) //column clear
+    clearWrong(document.getElementsByClassName(`row${selectedID[0]}`)) //row clear
+    clearWrongBox()
+
     document.getElementById(selectedID).innerHTML = ""
+    
+    for(n=1;n<10;n++){ //choose number 1-9
+        for(colRow=1;colRow<10;colRow++){ //checking column/row number
+            checkWrong(n,document.getElementsByClassName(`cell${colRow}`)) //columnChecking for number
+            checkWrong(n,document.getElementsByClassName(`row${colRow}`)) //rowChecking for number
+            checkWrongBox(n)// box checking
+        }   
+    }
+
 }
 
 
 
-score = 0
-correct = 3
-wrong = 1
+
 
 //jab number changed toh remove the red wala filter (if red wala changed)
 function clearWrong(cells){
@@ -311,7 +326,6 @@ function checkWrong(num,cells){
 
     //iterate each col to see if koi same numbers hai
     for(j=0;j<=8;j++){
-        console.log(cells)
         if(Number(cells[j].innerHTML) == num){
             duplicate+=1
             wrong.push(cells[j])
@@ -333,6 +347,53 @@ function checkWrong(num,cells){
     
 }
 
+
+box1 = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3", "3-1", "3-2", "3-3"]
+box2 = ["1-4", "1-5", "1-6", "2-4", "2-5", "2-6", "3-4", "3-5", "3-6"]
+box3 = ["1-7", "1-8", "1-9", "2-7", "2-8", "2-9", "3-7", "3-8", "3-9"]
+box4 = ["4-1", "4-2", "4-3", "5-1", "5-2", "5-3", "6-1", "6-2", "6-3"]
+box5 = ["4-4", "4-5", "4-6", "5-4", "5-5", "5-6", "6-4", "6-5", "6-6"]
+box6 = ["4-7", "4-8", "4-9", "5-7", "5-8", "5-9", "6-7", "6-8", "6-9"]
+box7 = ["7-1", "7-2", "7-3", "8-1", "8-2", "8-3", "9-1", "9-2", "9-3"]
+box8 = ["7-4", "7-5", "7-6", "8-4", "8-5", "8-6", "9-4", "9-5", "9-6"]
+box9 = ["7-7", "7-8", "7-9", "8-7", "8-8", "8-9", "9-7", "9-8", "9-9"]
+boxes = [box1, box2, box3, box4, box5, box6, box7, box8, box9]
+
+
+function clearWrongBox(){
+    for(box in boxes){
+        for(c in boxes[box]){
+            document.getElementById(boxes[box][c]).classList.remove('cellWrong')
+        }
+    }
+}
+
+function checkWrongBox(num){
+    
+    for (box in boxes){ //goes by each box 1,2,3,4 aage 
+
+        duplicate = 0
+        wrong = []
+
+        for(c in boxes[box]){ //goes for each cell in the box
+            if(Number(document.getElementById(boxes[box][c]).innerHTML) == num){
+                duplicate+=1
+                wrong.push(document.getElementById(boxes[box][c]))
+
+            }
+        }
+
+        if(duplicate>=2){
+            for(i in wrong){
+                wrong[i].classList.add('cellWrong')
+            }
+        }
+    }
+
+
+    
+
+}
 
 
 
