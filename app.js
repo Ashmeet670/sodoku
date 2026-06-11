@@ -43,6 +43,12 @@ sudokuBoardCorrect = [
 empty = 0
 
 
+for(i=9;i>=1;i--){
+    document.getElementById("numberButtonRow").insertAdjacentHTML('afterbegin',`<div class="cellC p-1 m-1" onclick="addNumber('${i}')">${i}</div>`)
+    document.getElementById("boardContainer").insertAdjacentHTML('afterbegin',`<div id="row-${i}" class="row justify-content-center mx-auto"></div>`)
+}
+
+
 for (let i = 1; i <= 9; i++) {
     for (let cell = 1; cell <= 9; cell++) {
         index = (((i - 1) * 9) + cell) - 1
@@ -54,7 +60,6 @@ for (let i = 1; i <= 9; i++) {
     }
 
 }
-
 
 
 const light = {
@@ -251,6 +256,7 @@ addEventListener("keydown", (event) => {
 
 // new commit test
 
+
 function addNumber(num) {
     index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
     sudokuBoard[index - 1] = num
@@ -259,9 +265,9 @@ function addNumber(num) {
     if (document.getElementById(selectedID).innerHTML == "") {
         empty -= 1
     }
-    // if (empty == 0) {
-    //     checkBoard()
-    // }
+    if (empty == 0) {
+        boardCompleteCheck()
+    }
 
     clearWrong(document.getElementsByClassName(`cell${selectedID[2]}`)) //column clear
     clearWrong(document.getElementsByClassName(`row${selectedID[0]}`)) //row clear
@@ -287,9 +293,9 @@ function eraseNumber() {
     if (!(document.getElementById(selectedID).innerHTML == "")) {
         empty += 1
     }
-    // if (empty == 0) {
-    //     checkBoard()
-    // }
+    if (empty == 0) {
+        boardCompleteCheck()
+    }
 
     clearWrong(document.getElementsByClassName(`cell${selectedID[2]}`)) //column clear
     clearWrong(document.getElementsByClassName(`row${selectedID[0]}`)) //row clear
@@ -393,6 +399,20 @@ function checkWrongBox(num){
 
     
 
+}
+
+function boardCompleteCheck(){
+    win = true
+    for(i in sudokuBoard){
+        if(Number(sudokuBoard[i])!=sudokuBoardCorrect[i]){
+            console.log("wrong haha")
+            win = false
+        }
+    }
+
+    if(win){
+        console.log('we win these')
+    }
 }
 
 
