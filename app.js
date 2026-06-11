@@ -48,7 +48,7 @@ for (let i = 1; i <= 9; i++) {
         index = (((i - 1) * 9) + cell) - 1
         document.getElementById("row-" + i).insertAdjacentHTML("beforeend",
 
-            sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} fillCell " onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell} fixedCell" >${sudokuBoard[index]}</div>`,
+            sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} row${i} fillCell " onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell} row${i} fixedCell" >${sudokuBoard[index]}</div>`,
             sudokuBoard[index] == "" ? empty += 1 : empty += 0
         )
     }
@@ -255,6 +255,7 @@ function addNumber(num) {
     index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
     sudokuBoard[index - 1] = num
 
+
     if (document.getElementById(selectedID).innerHTML == "") {
         empty -= 1
     }
@@ -262,7 +263,17 @@ function addNumber(num) {
     //     checkBoard()
     // }
 
+    clearWrong(document.getElementsByClassName(`cell${selectedID[2]}`)) //column clear
+    clearWrong(document.getElementsByClassName(`row${selectedID[0]}`)) //row clear
+
     document.getElementById(selectedID).innerHTML = num
+    
+    for(n=1;n<10;n++){ //choose number 1-9
+        for(colRow=1;colRow<10;colRow++){ //checking column/row number
+        checkWrong(n,document.getElementsByClassName(`cell${colRow}`)) //columnChecking for number
+        checkWrong(n,document.getElementsByClassName(`row${colRow}`)) //rowChecking for number
+        }   
+    }
 
 
 }
@@ -285,16 +296,22 @@ score = 0
 correct = 3
 wrong = 1
 
-function columnCheck(num){
+//jab number changed toh remove the red wala filter (if red wala changed)
+function clearWrong(cells){
+    
+    for(i=0;i<=8;i++){
+        cells[i].classList.remove('cellWrong')
+    }
+}
+
+function checkWrong(num,cells){
 
     duplicate = 0
-
-    cells = document.getElementsByClassName(`cell${selectedID[2]}`)
-
     wrong = []
 
     //iterate each col to see if koi same numbers hai
     for(j=0;j<=8;j++){
+        console.log(cells)
         if(Number(cells[j].innerHTML) == num){
             duplicate+=1
             wrong.push(cells[j])
@@ -302,10 +319,8 @@ function columnCheck(num){
     }
     //if same numbers hai toh make all red
     if(duplicate>=2){
-
-
         //add to sirif wrong wale cells
-        for(i=0;i<=wrong.length;i++){
+        for(i=0;i<=(wrong.length - 1);i++){
             wrong[i].classList.add('cellWrong')
         }
 
