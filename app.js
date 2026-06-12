@@ -152,6 +152,13 @@ function themeChange(theme, themeStr, btn) {
     document.getElementById(themeStr).classList.remove("d-none")
 }
 
+function buttonClick(btn){
+    btn.classList.add('btnPress')
+    setTimeout(() => {
+        btn.classList.remove('btnPress')
+    }, 310);
+}
+
 
 
 
@@ -171,7 +178,9 @@ addEventListener("keydown", (event) => {
         menuOpen()
     }
     if (!isNaN(event.key)) {  //gives true if a number
-        addNumber(event.key)
+        if(event.key != 0){
+            addNumber(event.key)
+        }
     }
 
     if (event.key == "Backspace") {  //gives true if a number
