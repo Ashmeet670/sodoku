@@ -420,9 +420,10 @@ function boardCompleteCheck(){
     }
 
     if(win){
-        console.log('we win these')
+        document.getElementById('winScreen').classList.remove('d-none')
     }
 }
+
 
 
 
