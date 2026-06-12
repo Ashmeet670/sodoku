@@ -14,6 +14,7 @@
     --fillHover: rgb(51, 51, 51);
     --fixedCellText: rgb(155, 155, 155);
     --cellWrong: rgba(255, 75, 75, 0.75);
+    --winScreen: rgba(216, 216, 216, 0.35);
 }
 
 body {
@@ -165,8 +166,63 @@ body {
 
 
 
+.win {
+    position: absolute;
+    background-color: var(--winScreen);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(2px);
+}
 
+.winBox {
+    background-color: var(--secondary);
+    display: block flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid var(--cellBorder);
+    text-align: center;
+    aspect-ratio: 3/2;
+    font-size: clamp(15px, 2vw, 22px);
+    font-family: "Kdam Thmor Pro", sans-serif;
 
+}
+
+.winTime {
+    font-size: clamp(32px, 4vw, 55px);
+}
+
+.playAgain {
+    background-color: var(--secondary);
+
+    border: 4px solid var(--cellBorder);
+    font-size: clamp(12px, 1.5vw, 20px);
+}
+
+.playAgain:hover {
+    cursor: pointer;
+    background-color: var(--fillHover);
+}
+
+.btnPress{
+    animation: buttonClick 0.3s 0s linear forwards;
+}
+
+@keyframes buttonClick {
+
+    0% {
+        scale: 1;
+    }
+
+    50%{
+        scale: 0.8;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
 
 
 @media only screen and (min-width:576px) {
