@@ -191,6 +191,7 @@ body {
 
 .winTime {
     font-size: clamp(32px, 4vw, 55px);
+
 }
 
 .playAgain {

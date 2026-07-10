@@ -265,11 +265,18 @@ addEventListener("keydown", (event) => {
 
 // new commit test
 
+firstFill = true
+timeStart = 0
+timeStop = 0
 
 function addNumber(num) {
     index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
     sudokuBoard[index - 1] = num
 
+    if(firstFill){
+        firstFill = false
+        timeStart = new Date()
+    }
 
     if (document.getElementById(selectedID).innerHTML == "") {
         empty -= 1
@@ -412,17 +419,26 @@ function checkWrongBox(num){
 
 function boardCompleteCheck(){
     win = true
-    for(i in sudokuBoard){
-        if(Number(sudokuBoard[i])!=sudokuBoardCorrect[i]){
-            console.log("wrong haha")
-            win = false
-        }
-    }
+    
 
     if(win){
+        timeStop = new Date()
+        difference = timeStop - timeStart
+        secondsTotal = Math.floor(difference/1000) //all minutes plus seconds 
+        minutes = Math.floor(secondsTotal/60) //only the minutes
+        seconds = secondsTotal - (minutes*60)   //only the seconds
+
+        
+
+        document.getElementById('minsTime').innerHTML = minutes
+        document.getElementById('secsTime').innerHTML = seconds
         document.getElementById('winScreen').classList.remove('d-none')
+
     }
 }
+
+
+
 
 
 
