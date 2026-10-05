@@ -11,20 +11,35 @@
 //     "", "", "", 4, 1, 9, "", "", 5,
 //     "", "", "", "", 8, "", "", 7, 9
 // ];
+
+
+// sudokuBoard = [
+//     5, 3, "", "", 7, "", "", "", "",
+//     6, "", "", 1, 9, 5, "", "", "",
+//     "", 9, 8, "", "", "", "", 6, "",
+
+//     8, "", "", "", 6, "", "", "", 3,
+//     4, "", "", 8, "", 3, "", "", 1,
+//     7, "", "", "", 2, "", "", "", 6,
+
+//     "", 6, "", "", "", "", 2, 8, "",
+//     "", "", "", 4, 1, 9, "", "", 5,
+//     "", "", "", "", 8, "", "", 7, 9
+// ];
+
 sudokuBoard = [
-    5, 3, "", "", 7, "", "", "", "",
-    6, "", "", 1, 9, 5, "", "", "",
-    "", 9, 8, "", "", "", "", 6, "",
+    5, "", 4, 6, 7, 8, 9, 1, 2,
+    6, 7, 2, 1, 9, 5, 3, 4, 8,
+    1, 9, 8, 3, 4, 2, 5, 6, 7,
 
-    8, "", "", "", 6, "", "", "", 3,
-    4, "", "", 8, "", 3, "", "", 1,
-    7, "", "", "", 2, "", "", "", 6,
+    8, "", 9, 7, 6, 1, 4, 2, 3,
+    4, 2, 6, 8, 5, 3, 7, 9, 1,
+    7, 1, 3, 9, 2, 4, 8, 5, 6,
 
-    "", 6, "", "", "", "", 2, 8, "",
-    "", "", "", 4, 1, 9, "", "", 5,
-    "", "", "", "", 8, "", "", 7, 9
+    9, 6, 1, 5, 3, 7, 2, 8, 4,
+    2, 8, 7, 4, 1, 9, 6, 3, 5,
+    3, 4, 5, 2, 8, 6, 1, 7, 9
 ];
-
 
 sudokuBoardCorrect = [
     5, 3, 4, 6, 7, 8, 9, 1, 2,
@@ -47,7 +62,7 @@ for(i=9;i>=1;i--){
     document.getElementById("numberButtonRow").insertAdjacentHTML('afterbegin',`<div class="cellC p-1 m-1" onclick="addNumber('${i}')">${i}</div>`)
     document.getElementById("boardContainer").insertAdjacentHTML('afterbegin',`<div id="row-${i}" class="row justify-content-center mx-auto"></div>`)
 }
-
+    
 
 for (let i = 1; i <= 9; i++) {
     for (let cell = 1; cell <= 9; cell++) {
@@ -268,6 +283,7 @@ addEventListener("keydown", (event) => {
 firstFill = true
 timeStart = 0
 timeStop = 0
+anyError = false
 
 function addNumber(num) {
     index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
@@ -280,9 +296,6 @@ function addNumber(num) {
 
     if (document.getElementById(selectedID).innerHTML == "") {
         empty -= 1
-    }
-    if (empty == 0) {
-        boardCompleteCheck()
     }
 
     clearWrong(document.getElementsByClassName(`cell${selectedID[2]}`)) //column clear
@@ -300,6 +313,9 @@ function addNumber(num) {
         }   
     }
 
+    if (empty == 0) {
+        boardCompleteCheck()
+    }
 
 }
 
@@ -335,7 +351,7 @@ function eraseNumber() {
 
 //jab number changed toh remove the red wala filter (if red wala changed)
 function clearWrong(cells){
-    
+    anyError = false
     for(i=0;i<=8;i++){
         cells[i].classList.remove('cellWrong')
     }
@@ -358,6 +374,7 @@ function checkWrong(num,cells){
         //add to sirif wrong wale cells
         for(i=0;i<=(wrong.length - 1);i++){
             wrong[i].classList.add('cellWrong')
+            anyError = true
         }
 
         //add to all cells in column
@@ -383,6 +400,7 @@ boxes = [box1, box2, box3, box4, box5, box6, box7, box8, box9]
 
 
 function clearWrongBox(){
+    anyError = false
     for(box in boxes){
         for(c in boxes[box]){
             document.getElementById(boxes[box][c]).classList.remove('cellWrong')
@@ -401,13 +419,13 @@ function checkWrongBox(num){
             if(Number(document.getElementById(boxes[box][c]).innerHTML) == num){
                 duplicate+=1
                 wrong.push(document.getElementById(boxes[box][c]))
-
-            }
         }
 
         if(duplicate>=2){
             for(i in wrong){
                 wrong[i].classList.add('cellWrong')
+                anyError = true
+            }
             }
         }
     }
@@ -417,11 +435,9 @@ function checkWrongBox(num){
 
 }
 
-function boardCompleteCheck(){
-    win = true
-    
-
-    if(win){
+function boardCompleteCheck(){    
+    console.log("anyerrorrr",anyError)
+    if(anyError == false){
         timeStop = new Date()
         difference = timeStop - timeStart
         secondsTotal = Math.floor(difference/1000) //all minutes plus seconds 
