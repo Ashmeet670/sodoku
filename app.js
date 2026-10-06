@@ -12,69 +12,98 @@
 //     "", "", "", "", 8, "", "", 7, 9
 // ];
 
-
-// sudokuBoard = [
-//     5, 3, "", "", 7, "", "", "", "",
-//     6, "", "", 1, 9, 5, "", "", "",
-//     "", 9, 8, "", "", "", "", 6, "",
-
-//     8, "", "", "", 6, "", "", "", 3,
-//     4, "", "", 8, "", 3, "", "", 1,
-//     7, "", "", "", 2, "", "", "", 6,
-
-//     "", 6, "", "", "", "", 2, 8, "",
-//     "", "", "", 4, 1, 9, "", "", 5,
-//     "", "", "", "", 8, "", "", 7, 9
-// ];
-
-sudokuBoard = [
-    5, "", 4, 6, 7, 8, 9, 1, 2,
-    6, 7, 2, 1, 9, 5, 3, 4, 8,
-    1, 9, 8, 3, 4, 2, 5, 6, 7,
-
-    8, "", 9, 7, 6, 1, 4, 2, 3,
-    4, 2, 6, 8, 5, 3, 7, 9, 1,
-    7, 1, 3, 9, 2, 4, 8, 5, 6,
-
-    9, 6, 1, 5, 3, 7, 2, 8, 4,
-    2, 8, 7, 4, 1, 9, 6, 3, 5,
-    3, 4, 5, 2, 8, 6, 1, 7, 9
-];
-
-sudokuBoardCorrect = [
-    5, 3, 4, 6, 7, 8, 9, 1, 2,
-    6, 7, 2, 1, 9, 5, 3, 4, 8,
-    1, 9, 8, 3, 4, 2, 5, 6, 7,
-
-    8, 5, 9, 7, 6, 1, 4, 2, 3,
-    4, 2, 6, 8, 5, 3, 7, 9, 1,
-    7, 1, 3, 9, 2, 4, 8, 5, 6,
-
-    9, 6, 1, 5, 3, 7, 2, 8, 4,
-    2, 8, 7, 4, 1, 9, 6, 3, 5,
-    3, 4, 5, 2, 8, 6, 1, 7, 9
-];
-
-empty = 0
+let sudokuBoard = [];
+let sudokuBoardCorrect = [];
 
 
-for(i=9;i>=1;i--){
-    document.getElementById("numberButtonRow").insertAdjacentHTML('afterbegin',`<div class="cellC p-1 m-1" onclick="addNumber('${i}')">${i}</div>`)
-    document.getElementById("boardContainer").insertAdjacentHTML('afterbegin',`<div id="row-${i}" class="row justify-content-center mx-auto"></div>`)
-}
-    
 
-for (let i = 1; i <= 9; i++) {
-    for (let cell = 1; cell <= 9; cell++) {
-        index = (((i - 1) * 9) + cell) - 1
-        document.getElementById("row-" + i).insertAdjacentHTML("beforeend",
+async function board() {
+    const data = await fetch("https://sudoku-api.vercel.app/api/dosuku?query={newboard(limit:1){grids{value,solution,difficulty},results,message}}")
+    var j = await data.json()
+    var difficulty = j.newboard.grids[0].difficulty
+    console.log(difficulty, "difficulty")
 
-            sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} row${i} fillCell " onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell} row${i} fixedCell" >${sudokuBoard[index]}</div>`,
-            sudokuBoard[index] == "" ? empty += 1 : empty += 0
-        )
+
+    sudokuBoard = [];
+    sudokuBoardCorrect = [];
+
+    for(let arr = 0;arr<=8;arr++){
+        let a = j.newboard.grids[0].value[arr]
+
+        for(let box = 0;box<=8;box++){
+            if(a[box]==0){
+                sudokuBoard.push("")
+            }
+            else{
+                sudokuBoard.push(a[box])
+            }
+        }
+    }
+    console.log("------")
+    for(let arr = 0;arr<=8;arr++){
+
+        let a = j.newboard.grids[0].solution[arr]
+
+        for(let box = 0;box<=8;box++){
+            sudokuBoardCorrect.push(a[box])
+        }
+        
     }
 
+
+    sudokuBoard[0] = ""
+    sudokuBoard[1] = ""
 }
+
+var empty = 0
+var selectedID = "ignore"
+var menuOpened = false
+var idN
+
+var firstFill = true
+var timeStart = 0
+var timeStop = 0
+var anyError = false
+
+async function start(){
+    empty = 0
+    selectedID = "ignore"
+    menuOpened = false
+    idN = null
+    firstFill = true
+    timeStart = 0
+    timeStop = 0
+    anyError = false
+
+    await board()
+    document.getElementById('winScreen').classList.add('d-none')
+
+
+    document.getElementById("boardContainer").innerHTML = ""
+    document.getElementById("numberButtonRow").innerHTML = `<div class="cellC p-1 m-1 " onclick="eraseNumber()"><i class="bi bi-eraser"></i></div><br class="d-md-none">`
+
+    for(let i=9;i>=1;i--){
+        document.getElementById("numberButtonRow").insertAdjacentHTML('afterbegin',`<div class="cellC p-1 m-1" onclick="addNumber('${i}')">${i}</div>`)
+        document.getElementById("boardContainer").insertAdjacentHTML('afterbegin',`<div id="row-${i}" class="row justify-content-center mx-auto"></div>`)
+    }
+        
+    for (let i = 1; i <= 9; i++) {
+        for (let cell = 1; cell <= 9; cell++) {
+            var index = (((i - 1) * 9) + cell) - 1
+            document.getElementById("row-" + i).insertAdjacentHTML("beforeend",
+    
+                sudokuBoard[index] == "" ? `<div id="${i}-${cell}" class="col-1 cell cell${cell} row${i} fillCell " onclick="boxSelected(this)">${sudokuBoard[index]}</div>` : `<div id="${i}-${cell}" class="col-1 cell cell${cell} row${i} fixedCell" >${sudokuBoard[index]}</div>`,
+                sudokuBoard[index] == "" ? empty += 1 : empty += 0
+            )
+        }
+    
+    }
+    console.log(empty)
+    console.log(sudokuBoard)
+    console.log(sudokuBoardCorrect)
+}
+window.start = start
+await start()
 
 
 const light = {
@@ -109,19 +138,19 @@ var theme = localStorage.getItem("themes")
 
 if (theme == null) {
     localStorage.setItem("themes", "light")
-    for (i in light) {
+    for (let i in light) {
         document.documentElement.style.setProperty(i, light[i]);
     }
 }
 if (theme == "dark") {
     document.getElementById("dark").classList.remove("d-none")
     document.getElementById("light").classList.add("d-none")
-    for (i in dark) {
+    for (let i in dark) {
         document.documentElement.style.setProperty(i, dark[i]);
     }
 }
 if (theme == "light") {
-    for (i in light) {
+    for (let i in light) {
         document.documentElement.style.setProperty(i, light[i]);
     }
 }
@@ -132,7 +161,6 @@ if (theme == "light") {
 
 
 
-var menuOpened = false
 
 function menuOpen(btn) {
 
@@ -143,11 +171,11 @@ function menuOpen(btn) {
 
 
 }
+window.menuOpen = menuOpen
 
 function menuClose() {
     document.getElementById("menu").classList.add("menuOutAnim")
     menuOpened = false
-
 
     setTimeout(() => {
         document.getElementById("menu").classList.remove("menuOutAnim")
@@ -155,10 +183,11 @@ function menuClose() {
         document.getElementById("bb").classList.remove("blurBG")
     }, 500);
 }
+window.menuClose = menuClose
 
 function themeChange(theme, themeStr, btn) {
 
-    for (i in theme) {
+    for (let i in theme) {
         document.documentElement.style.setProperty(i, theme[i]);
     }
     localStorage.setItem("themes", themeStr)
@@ -166,6 +195,8 @@ function themeChange(theme, themeStr, btn) {
     btn.classList.add("d-none")
     document.getElementById(themeStr).classList.remove("d-none")
 }
+window.themeChange = themeChange
+
 
 function buttonClick(btn){
     btn.classList.add('btnPress')
@@ -173,25 +204,39 @@ function buttonClick(btn){
         btn.classList.remove('btnPress')
     }, 310);
 }
+window.buttonClick = buttonClick
 
 
 
 
-selectedID = "ignore"
 
 function boxSelected(box) {
     document.getElementById(selectedID).classList.remove("fillCellSelected")
     selectedID = box.id
     box.classList.add("fillCellSelected")
 }
+window.boxSelected = boxSelected
+
 
 addEventListener("keydown", (event) => {
     if (event.key == "Escape" && menuOpened == true) {
         menuClose()
     }
-    if ((event.key == "m" || event.key == "M") && menuOpened == false) {
-        menuOpen()
+
+
+    //only playtesting pe on krna
+    // if (event.key == "r") {
+    //     start()
+    // }
+    if ((event.key == "m" || event.key == "M")){
+        if(menuOpened){
+            menuClose()
+        }
+        else{
+            menuOpen()
+        }
     }
+        
     if (!isNaN(event.key)) {  //gives true if a number
         if(event.key != 0){
             addNumber(event.key)
@@ -280,13 +325,10 @@ addEventListener("keydown", (event) => {
 
 // new commit test
 
-firstFill = true
-timeStart = 0
-timeStop = 0
-anyError = false
+
 
 function addNumber(num) {
-    index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
+    let index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
     sudokuBoard[index - 1] = num
 
     if(firstFill){
@@ -297,7 +339,6 @@ function addNumber(num) {
     if (document.getElementById(selectedID).innerHTML == "") {
         empty -= 1
     }
-
     clearWrong(document.getElementsByClassName(`cell${selectedID[2]}`)) //column clear
     clearWrong(document.getElementsByClassName(`row${selectedID[0]}`)) //row clear
     clearWrongBox()
@@ -305,8 +346,8 @@ function addNumber(num) {
     
     document.getElementById(selectedID).innerHTML = num
     
-    for(n=1;n<10;n++){ //choose number 1-9
-        for(colRow=1;colRow<10;colRow++){ //checking column/row number
+    for(let n=1;n<10;n++){ //choose number 1-9
+        for(let colRow=1;colRow<10;colRow++){ //checking column/row number
             checkWrong(n,document.getElementsByClassName(`cell${colRow}`)) //columnChecking for number
             checkWrong(n,document.getElementsByClassName(`row${colRow}`)) //rowChecking for number
             checkWrongBox(n)// box checking
@@ -318,6 +359,7 @@ function addNumber(num) {
     }
 
 }
+window.addNumber = addNumber
 
 function eraseNumber() {
     index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
@@ -335,8 +377,8 @@ function eraseNumber() {
 
     document.getElementById(selectedID).innerHTML = ""
     
-    for(n=1;n<10;n++){ //choose number 1-9
-        for(colRow=1;colRow<10;colRow++){ //checking column/row number
+    for(let n=1;n<10;n++){ //choose number 1-9
+        for(let colRow=1;colRow<10;colRow++){ //checking column/row number
             checkWrong(n,document.getElementsByClassName(`cell${colRow}`)) //columnChecking for number
             checkWrong(n,document.getElementsByClassName(`row${colRow}`)) //rowChecking for number
             checkWrongBox(n)// box checking
@@ -344,7 +386,7 @@ function eraseNumber() {
     }
 
 }
-
+window.eraseNumber = eraseNumber
 
 
 
@@ -352,18 +394,18 @@ function eraseNumber() {
 //jab number changed toh remove the red wala filter (if red wala changed)
 function clearWrong(cells){
     anyError = false
-    for(i=0;i<=8;i++){
+    for(let i=0;i<=8;i++){
         cells[i].classList.remove('cellWrong')
     }
 }
 
 function checkWrong(num,cells){
 
-    duplicate = 0
-    wrong = []
+    let duplicate = 0
+    let wrong = []
 
     //iterate each col to see if koi same numbers hai
-    for(j=0;j<=8;j++){
+    for(let j=0;j<=8;j++){
         if(Number(cells[j].innerHTML) == num){
             duplicate+=1
             wrong.push(cells[j])
@@ -372,7 +414,7 @@ function checkWrong(num,cells){
     //if same numbers hai toh make all red
     if(duplicate>=2){
         //add to sirif wrong wale cells
-        for(i=0;i<=(wrong.length - 1);i++){
+        for(let i=0;i<=(wrong.length - 1);i++){
             wrong[i].classList.add('cellWrong')
             anyError = true
         }
@@ -387,22 +429,22 @@ function checkWrong(num,cells){
 }
 
 
-box1 = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3", "3-1", "3-2", "3-3"]
-box2 = ["1-4", "1-5", "1-6", "2-4", "2-5", "2-6", "3-4", "3-5", "3-6"]
-box3 = ["1-7", "1-8", "1-9", "2-7", "2-8", "2-9", "3-7", "3-8", "3-9"]
-box4 = ["4-1", "4-2", "4-3", "5-1", "5-2", "5-3", "6-1", "6-2", "6-3"]
-box5 = ["4-4", "4-5", "4-6", "5-4", "5-5", "5-6", "6-4", "6-5", "6-6"]
-box6 = ["4-7", "4-8", "4-9", "5-7", "5-8", "5-9", "6-7", "6-8", "6-9"]
-box7 = ["7-1", "7-2", "7-3", "8-1", "8-2", "8-3", "9-1", "9-2", "9-3"]
-box8 = ["7-4", "7-5", "7-6", "8-4", "8-5", "8-6", "9-4", "9-5", "9-6"]
-box9 = ["7-7", "7-8", "7-9", "8-7", "8-8", "8-9", "9-7", "9-8", "9-9"]
-boxes = [box1, box2, box3, box4, box5, box6, box7, box8, box9]
+const box1 = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3", "3-1", "3-2", "3-3"]
+const box2 = ["1-4", "1-5", "1-6", "2-4", "2-5", "2-6", "3-4", "3-5", "3-6"]
+const box3 = ["1-7", "1-8", "1-9", "2-7", "2-8", "2-9", "3-7", "3-8", "3-9"]
+const box4 = ["4-1", "4-2", "4-3", "5-1", "5-2", "5-3", "6-1", "6-2", "6-3"]
+const box5 = ["4-4", "4-5", "4-6", "5-4", "5-5", "5-6", "6-4", "6-5", "6-6"]
+const box6 = ["4-7", "4-8", "4-9", "5-7", "5-8", "5-9", "6-7", "6-8", "6-9"]
+const box7 = ["7-1", "7-2", "7-3", "8-1", "8-2", "8-3", "9-1", "9-2", "9-3"]
+const box8 = ["7-4", "7-5", "7-6", "8-4", "8-5", "8-6", "9-4", "9-5", "9-6"]
+const box9 = ["7-7", "7-8", "7-9", "8-7", "8-8", "8-9", "9-7", "9-8", "9-9"]
+const boxes = [box1, box2, box3, box4, box5, box6, box7, box8, box9]
 
 
 function clearWrongBox(){
     anyError = false
-    for(box in boxes){
-        for(c in boxes[box]){
+    for(let box in boxes){
+        for(let c in boxes[box]){
             document.getElementById(boxes[box][c]).classList.remove('cellWrong')
         }
     }
@@ -410,19 +452,19 @@ function clearWrongBox(){
 
 function checkWrongBox(num){
     
-    for (box in boxes){ //goes by each box 1,2,3,4 aage 
+    for (let box in boxes){ //goes by each box 1,2,3,4 aage 
 
-        duplicate = 0
-        wrong = []
+        let duplicate = 0
+        let wrong = []
 
-        for(c in boxes[box]){ //goes for each cell in the box
+        for(let c in boxes[box]){ //goes for each cell in the box
             if(Number(document.getElementById(boxes[box][c]).innerHTML) == num){
                 duplicate+=1
                 wrong.push(document.getElementById(boxes[box][c]))
         }
 
         if(duplicate>=2){
-            for(i in wrong){
+            for(let i in wrong){
                 wrong[i].classList.add('cellWrong')
                 anyError = true
             }
@@ -437,12 +479,13 @@ function checkWrongBox(num){
 
 function boardCompleteCheck(){    
     console.log("anyerrorrr",anyError)
+
     if(anyError == false){
-        timeStop = new Date()
-        difference = timeStop - timeStart
-        secondsTotal = Math.floor(difference/1000) //all minutes plus seconds 
-        minutes = Math.floor(secondsTotal/60) //only the minutes
-        seconds = secondsTotal - (minutes*60)   //only the seconds
+        let timeStop = new Date()
+        let difference = timeStop - timeStart
+        let secondsTotal = Math.floor(difference/1000) //all minutes plus seconds 
+        let minutes = Math.floor(secondsTotal/60) //only the minutes
+        let seconds = secondsTotal - (minutes*60)   //only the seconds
 
         
 
@@ -452,7 +495,6 @@ function boardCompleteCheck(){
 
     }
 }
-
 
 
 
