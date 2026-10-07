@@ -137,9 +137,9 @@ const dark = {
 var theme = localStorage.getItem("themes")
 
 if (theme == null) {
-    localStorage.setItem("themes", "light")
-    for (let i in light) {
-        document.documentElement.style.setProperty(i, light[i]);
+    localStorage.setItem("themes", "dark")
+    for (let i in dark) {
+        document.documentElement.style.setProperty(i, dark[i]);
     }
 }
 if (theme == "dark") {
@@ -150,14 +150,11 @@ if (theme == "dark") {
     }
 }
 if (theme == "light") {
+
     for (let i in light) {
         document.documentElement.style.setProperty(i, light[i]);
     }
 }
-
-
-
-
 
 
 
@@ -185,10 +182,12 @@ function menuClose() {
 }
 window.menuClose = menuClose
 
-function themeChange(theme, themeStr, btn) {
+function themeChange(themeStr, btn) {
+    let themeData
+    themeStr == "light"? themeData=light:themeData=dark
 
-    for (let i in theme) {
-        document.documentElement.style.setProperty(i, theme[i]);
+    for (let i in themeData) {
+        document.documentElement.style.setProperty(i, themeData[i]);
     }
     localStorage.setItem("themes", themeStr)
 
