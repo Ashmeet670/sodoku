@@ -98,9 +98,11 @@ async function start(){
         }
     
     }
+
     console.log(empty)
-    console.log(sudokuBoard)
-    console.log(sudokuBoardCorrect)
+    if(empty>55){
+        start() //ik we can see it change but dekhne mai bdiya lgta toh i will keep haha
+    }
 }
 window.start = start
 await start()
