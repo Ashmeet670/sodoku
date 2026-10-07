@@ -361,7 +361,7 @@ function addNumber(num) {
 window.addNumber = addNumber
 
 function eraseNumber() {
-    index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
+    let index = (Number((selectedID[0] - 1) * 9)) + Number(selectedID[2])
     sudokuBoard[index - 1] = ""
     if (!(document.getElementById(selectedID).innerHTML == "")) {
         empty += 1
