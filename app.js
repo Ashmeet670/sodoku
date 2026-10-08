@@ -83,8 +83,10 @@ async function start(){
     document.getElementById("numberButtonRow").innerHTML = `<div class="cellC p-1 m-1 " onclick="eraseNumber()"><i class="bi bi-eraser"></i></div><br class="d-md-none">`
 
     for(let i=9;i>=1;i--){
+        
         document.getElementById("numberButtonRow").insertAdjacentHTML('afterbegin',`<div class="cellC p-1 m-1" onclick="addNumber('${i}')">${i}</div>`)
         document.getElementById("boardContainer").insertAdjacentHTML('afterbegin',`<div id="row-${i}" class="row justify-content-center mx-auto"></div>`)
+        i==6? document.getElementById("numberButtonRow").insertAdjacentHTML('afterbegin',`<br class="d-md-none">`) : console.log('')
     }
         
     for (let i = 1; i <= 9; i++) {
