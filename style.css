@@ -93,6 +93,9 @@ body {
 
 }
 
+.loading {
+    color: var(--primaryText);
+}
 
 #menu {
     min-width: 50vw;
@@ -206,7 +209,7 @@ body {
     background-color: var(--fillHover);
 }
 
-.btnPress{
+.btnPress {
     animation: buttonClick 0.3s 0s linear forwards;
 }
 
@@ -216,7 +219,7 @@ body {
         scale: 1;
     }
 
-    50%{
+    50% {
         scale: 0.8;
     }
 
