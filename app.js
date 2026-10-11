@@ -12,9 +12,61 @@
 //     "", "", "", "", 8, "", "", 7, 9
 // ];
 
+const light = {
+    "--primary": "rgb(235, 235, 235)",
+    "--secondary": "white",
+    "--shadow": "rgb(205, 205, 205)",
+    "--cellBorder": "rgb(240, 240, 240)",
+    "--outlineBorder": "black",
+    "--text": "black",
+    "--selectBG": "rgb(250, 250, 250)",
+    "--fillHover": "rgb(247, 247, 247)",
+    "--fixedCellText": "rgb(155,155,155)",
+
+
+}
+
+const dark = {
+    "--primary": "rgb(25,25,25)",
+    "--secondary": "rgb(41,41,41)",
+    "--shadow": "rgb(25, 25, 25)",
+    "--cellBorder": "rgb(65, 65, 65)",
+    "--outlineBorder": "rgb(110, 110, 110)",
+    "--text": "rgb(230, 230, 230)",
+    "--selectBG": "rgb(65, 65, 65)",
+    "--fillHover": "rgb(51, 51, 51)",
+    "--fixedCellText": "rgb(155,155,155)",
+
+
+}
+
+var theme = localStorage.getItem("themes")
+
+if (theme == null) {
+    localStorage.setItem("themes", "dark")
+    for (let i in dark) {
+        document.documentElement.style.setProperty(i, dark[i]);
+    }
+}
+if (theme == "dark") {
+    document.getElementById("dark").classList.remove("d-none")
+    document.getElementById("light").classList.add("d-none")
+    for (let i in dark) {
+        document.documentElement.style.setProperty(i, dark[i]);
+    }
+}
+if (theme == "light") {
+
+    for (let i in light) {
+        document.documentElement.style.setProperty(i, light[i]);
+    }
+}
+
+
+
+
 let sudokuBoard = [];
 let sudokuBoardCorrect = [];
-
 
 
 async function board() {
@@ -80,14 +132,16 @@ async function start(){
 
 
     document.getElementById("boardContainer").innerHTML = ""
-    document.getElementById("numberButtonRow").innerHTML = `<div class="cellC p-1 m-1 " onclick="eraseNumber()"><i class="bi bi-eraser"></i></div><br class="d-md-none">`
+    document.getElementById("numberButtonRow").innerHTML = ""
 
     for(let i=9;i>=1;i--){
         
-        document.getElementById("numberButtonRow").insertAdjacentHTML('afterbegin',`<div class="cellC p-1 m-1" onclick="addNumber('${i}')">${i}</div>`)
+        document.getElementById("numberButtonRow").insertAdjacentHTML('afterbegin',`<div class="cellC p-1 m-1" onclick="addNumber('${i}'),buttonClick(this) ">${i}</div>`)
         document.getElementById("boardContainer").insertAdjacentHTML('afterbegin',`<div id="row-${i}" class="row justify-content-center mx-auto"></div>`)
         i==6? document.getElementById("numberButtonRow").insertAdjacentHTML('afterbegin',`<br class="d-md-none">`) : console.log('')
     }
+    document.getElementById("numberButtonRow").insertAdjacentHTML('beforeend',`<div class="cellC p-1 m-1 " onclick="eraseNumber()"><i class="bi bi-eraser"></i></div>`)
+    
         
     for (let i = 1; i <= 9; i++) {
         for (let cell = 1; cell <= 9; cell++) {
@@ -106,59 +160,9 @@ async function start(){
         start() //ik we can see it change but dekhne mai bdiya lgta toh i will keep haha
     }
 }
+
 window.start = start
 await start()
-
-
-const light = {
-    "--primary": "rgb(235, 235, 235)",
-    "--secondary": "white",
-    "--shadow": "rgb(205, 205, 205)",
-    "--cellBorder": "rgb(240, 240, 240)",
-    "--outlineBorder": "black",
-    "--text": "black",
-    "--selectBG": "rgb(250, 250, 250)",
-    "--fillHover": "rgb(247, 247, 247)",
-    "--fixedCellText": "rgb(155,155,155)",
-
-
-}
-
-const dark = {
-    "--primary": "rgb(25,25,25)",
-    "--secondary": "rgb(41,41,41)",
-    "--shadow": "rgb(25, 25, 25)",
-    "--cellBorder": "rgb(65, 65, 65)",
-    "--outlineBorder": "rgb(110, 110, 110)",
-    "--text": "rgb(230, 230, 230)",
-    "--selectBG": "rgb(65, 65, 65)",
-    "--fillHover": "rgb(51, 51, 51)",
-    "--fixedCellText": "rgb(155,155,155)",
-
-
-}
-
-var theme = localStorage.getItem("themes")
-
-if (theme == null) {
-    localStorage.setItem("themes", "dark")
-    for (let i in dark) {
-        document.documentElement.style.setProperty(i, dark[i]);
-    }
-}
-if (theme == "dark") {
-    document.getElementById("dark").classList.remove("d-none")
-    document.getElementById("light").classList.add("d-none")
-    for (let i in dark) {
-        document.documentElement.style.setProperty(i, dark[i]);
-    }
-}
-if (theme == "light") {
-
-    for (let i in light) {
-        document.documentElement.style.setProperty(i, light[i]);
-    }
-}
 
 
 
